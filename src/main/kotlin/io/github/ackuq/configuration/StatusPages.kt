@@ -2,42 +2,36 @@ package io.github.ackuq.configuration
 
 import io.github.ackuq.utils.handleApiError
 import io.github.ackuq.utils.handleApiException
-import io.ktor.http.*
-import io.ktor.server.application.*
-import io.ktor.server.plugins.*
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.plugins.BadRequestException
+import io.ktor.server.plugins.NotFoundException
+import io.ktor.server.plugins.StatusPages
 import kotlinx.serialization.SerializationException
-
-inline fun <reified T : Throwable> StatusPagesConfig.exceptionHandle(
-    status: HttpStatusCode,
-    doThrow: Boolean = false
-) =
-    exception<T> { call, err ->
-        handleApiException(err, status, call)
-        if (doThrow) {
-            throw err
-        }
-    }
 
 fun Application.configureStatusPages() {
     install(StatusPages) {
         /**
          * Exceptions
          */
-        // When the entity is not found
-        exceptionHandle<NotFoundException>(HttpStatusCode.NotFound)
-        // When the request is bad
-        exceptionHandle<BadRequestException>(HttpStatusCode.BadRequest)
-        // No or expired credentials
-        exceptionHandle<AuthenticationException>(HttpStatusCode.Unauthorized)
-        // When not enough permission
-        exceptionHandle<AuthorizationException>(HttpStatusCode.Forbidden)
-        // Serialization errors due to payload
-        exceptionHandle<SerializationException>(HttpStatusCode.BadRequest)
-        // Something unexpected
-        exceptionHandle<Throwable>(
-            HttpStatusCode.InternalServerError,
-            doThrow = true
-        )
+        exception<Throwable> { call, cause ->
+            when (cause) {
+                is NotFoundException -> handleApiException(cause, HttpStatusCode.NotFound, call)
+                is BadRequestException, is SerializationException -> handleApiException(
+                    cause,
+                    HttpStatusCode.BadRequest,
+                    call
+                )
+                is AuthenticationException -> handleApiException(cause, HttpStatusCode.Unauthorized, call)
+                is AuthorizationException -> handleApiException(cause, HttpStatusCode.Forbidden, call)
+                else -> {
+                    handleApiException(cause, HttpStatusCode.InternalServerError, call)
+                    // Throw this error so we know what went wrong
+                    throw cause
+                }
+            }
+        }
         /**
          * Statuses
          */

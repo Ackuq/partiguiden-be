@@ -1,8 +1,10 @@
 package io.github.ackuq.configuration
 
-import io.ktor.http.*
-import io.ktor.server.plugins.*
-import io.ktor.server.application.*
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.plugins.CORS
 
 fun Application.configureHTTP() {
     install(CORS) {
