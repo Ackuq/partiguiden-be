@@ -12,7 +12,7 @@ val jsoupVersion = "1.14.3"
 plugins {
     application
     kotlin("jvm") version "1.6.10"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.6.10"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.6.21"
     id("org.flywaydb.flyway") version "8.5.4"
     id("com.jetbrains.exposed.gradle.plugin") version "0.2.1"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
