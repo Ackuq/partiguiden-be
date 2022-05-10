@@ -12,8 +12,8 @@ import io.github.ackuq.routes.standpointsRoutes
 import io.github.ackuq.routes.subjectRoutes
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
-import io.ktor.server.plugins.AutoHeadResponse
-import io.ktor.server.plugins.DefaultHeaders
+import io.ktor.server.plugins.autohead.AutoHeadResponse
+import io.ktor.server.plugins.defaultheaders.DefaultHeaders
 import io.ktor.server.resources.Resources
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing

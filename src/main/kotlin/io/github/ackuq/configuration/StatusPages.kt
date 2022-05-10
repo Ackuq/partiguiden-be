@@ -7,7 +7,7 @@ import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.plugins.BadRequestException
 import io.ktor.server.plugins.NotFoundException
-import io.ktor.server.plugins.StatusPages
+import io.ktor.server.plugins.statuspages.StatusPages
 import kotlinx.serialization.SerializationException
 
 fun Application.configureStatusPages() {
