@@ -38,7 +38,7 @@ fun Application.configureOAuth() {
             }
             providerLookup = {
                 val state = this.request.queryParameters[OAuthConfiguration.stateQueryParameter]
-                
+
                 OAuthServerSettings.OAuth2ServerSettings(
                     name = "google",
                     authorizeUrl = "https://accounts.google.com/o/oauth2/auth",
