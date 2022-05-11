@@ -26,7 +26,7 @@ fun Route.subjectRoutes() {
             ?: throw NotFoundException("Subject could not be found")
         handleApiSuccess(subject.toDetailedDTO(), HttpStatusCode.OK, call)
     }
-    authenticate(OAuthConfiguration.sessionName) {
+    authenticate(OAuthConfiguration.authName) {
         post<Subjects> {
             val newSubject = call.receive<NewSubjectDTO>()
             val subject = SubjectService.createSubject(newSubject)

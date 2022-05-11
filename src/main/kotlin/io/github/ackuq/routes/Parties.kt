@@ -27,7 +27,7 @@ fun Route.partyRoutes() {
             ?: throw NotFoundException("Party could not be found")
         handleApiSuccess(party.toDTO(), HttpStatusCode.OK, call)
     }
-    authenticate(OAuthConfiguration.sessionName) {
+    authenticate(OAuthConfiguration.authName) {
         post<Parties> {
             val newParty = call.receive<NewPartyDTO>()
             val party = PartyService.createParty(newParty)

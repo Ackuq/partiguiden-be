@@ -51,7 +51,6 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     // Authentication
     implementation("io.ktor:ktor-server-auth:$ktorVersion")
-    implementation("io.ktor:ktor-server-sessions:$ktorVersion")
     // Web Scraping
     implementation("org.jsoup:jsoup:$jsoupVersion")
     // Typesafe routing

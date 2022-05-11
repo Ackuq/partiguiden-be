@@ -14,7 +14,7 @@ import io.ktor.server.sessions.sessions
 import io.ktor.server.sessions.set
 
 fun Route.authenticationRoutes() {
-    authenticate(OAuthConfiguration.name) {
+    authenticate(OAuthConfiguration.oAuthName) {
         get("/login") {
             // Redirects to 'authorizeUrl' automatically
         }

@@ -28,7 +28,7 @@ fun Route.standpointsRoutes() {
         handleApiSuccess(standpoint.toDTO(), HttpStatusCode.OK, call)
     }
 
-    authenticate(OAuthConfiguration.sessionName) {
+    authenticate(OAuthConfiguration.authName) {
         post<Standpoints> {
             val standpointDTO = call.receive<NewStandpointDTO>()
             val standpoint = StandpointService.createStandpoint(standpointDTO)
