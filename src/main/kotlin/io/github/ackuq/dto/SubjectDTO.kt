@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class SubjectDTO(
     val id: Int,
     val name: String,
-    val standpoints: List<String>
+    val standpoints: List<Int>
 )
 
 @Serializable

@@ -9,8 +9,8 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 
 object StandpointService {
-    fun getStandpoint(id: String): Standpoint? = transaction {
-        Standpoint.find { Standpoints.id eq id }.firstOrNull()
+    fun getStandpoint(id: Int): Standpoint? = transaction {
+        Standpoint.findById(id)
     }
 
     fun getStandpointByLink(link: String): Standpoint? = transaction {
@@ -19,10 +19,6 @@ object StandpointService {
 
     fun getAllStandpoints(): List<Standpoint> = transaction {
         Standpoint.all().toList()
-    }
-
-    fun getStandpoints(abbreviations: List<String>): List<Standpoint> = transaction {
-        Standpoint.find { Standpoints.id inList abbreviations }.toList()
     }
 
     fun createStandpoint(newStandpointDTO: NewStandpointDTO): Standpoint = transaction {
@@ -47,8 +43,9 @@ object StandpointService {
     fun updateStandpoint(standpoint: Standpoint, updateStandpointDTO: UpdateStandpointDTO): Standpoint = transaction {
         updateStandpointDTO.title?.let { standpoint.title = it }
         updateStandpointDTO.content?.let { standpoint.content = it.toTypedArray() }
-        // TODO: Updating link means updating the ID as well
-        updateStandpointDTO.link?.let { standpoint.link = it }
+        updateStandpointDTO.link?.let {
+            standpoint.link = it
+        }
         // Reference updates
         updateStandpointDTO.party?.let {
             val party = PartyService.getPartyByAbbreviation(it)
@@ -58,6 +55,9 @@ object StandpointService {
         updateStandpointDTO.subject?.let {
             val subject = SubjectService.getSubject(it)
             standpoint.subject = subject
+        }
+        if (updateStandpointDTO.content != null || updateStandpointDTO.title != null) {
+            standpoint.updateDate = LocalDateTime.now()
         }
         standpoint
     }

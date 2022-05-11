@@ -8,5 +8,5 @@ import kotlinx.serialization.Serializable
 class Standpoints {
     @Serializable
     @Resource("{id}")
-    class Id(@Suppress("unused") val parent: Standpoints = Standpoints(), val id: String)
+    class Id(@Suppress("unused") val parent: Standpoints = Standpoints(), val id: Int)
 }

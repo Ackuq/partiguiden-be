@@ -3,8 +3,6 @@ package io.github.ackuq.dto
 import io.ktor.server.auth.Principal
 import kotlinx.serialization.Serializable
 
-data class UserSession(val token: String)
-
 @Serializable
 data class UserInfo(
     val id: String,
@@ -13,3 +11,8 @@ data class UserInfo(
     val picture: String,
     val hd: String
 ) : Principal
+
+@Serializable
+data class AuthInfo(
+    val accessToken: String,
+)

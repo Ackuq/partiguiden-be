@@ -2,10 +2,10 @@ package io.github.ackuq.dao
 
 import array
 import io.github.ackuq.dto.StandpointDTO
-import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityClass
+import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IdTable
+import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.TextColumnType
@@ -13,9 +13,8 @@ import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 
-object Standpoints : IdTable<String>(name = "standpoints") {
+object Standpoints : IntIdTable(name = "standpoints", columnName = "id") {
     // Hashed version of the url to identify the objects
-    override val id: Column<EntityID<String>> = varchar("id", 64).entityId()
     val link: Column<String> = varchar("link", 150).uniqueIndex()
     val title: Column<String> = varchar("title", 100)
 
@@ -33,12 +32,10 @@ object Standpoints : IdTable<String>(name = "standpoints") {
         onDelete = ReferenceOption.SET_NULL,
         fkName = "fk_standpoints_subject"
     ).nullable()
-
-    override val primaryKey = PrimaryKey(id)
 }
 
-class Standpoint(id: EntityID<String>) : Entity<String>(id) {
-    companion object : EntityClass<String, Standpoint>(Standpoints)
+class Standpoint(id: EntityID<Int>) : IntEntity(id) {
+    companion object : EntityClass<Int, Standpoint>(Standpoints)
 
     var link by Standpoints.link
     var title by Standpoints.title

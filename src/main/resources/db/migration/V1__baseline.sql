@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS subjects (
 );
 
 CREATE TABLE IF NOT EXISTS standpoints (
-    id VARCHAR(64) PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     link VARCHAR(150) NOT NULL CONSTRAINT standpoints_link_unique UNIQUE,
     title VARCHAR(100) NOT NULL,
     content TEXT ARRAY NOT NULL,

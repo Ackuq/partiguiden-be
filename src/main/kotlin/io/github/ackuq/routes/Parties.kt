@@ -4,6 +4,7 @@ import io.github.ackuq.configuration.OAuthConfiguration
 import io.github.ackuq.dto.NewPartyDTO
 import io.github.ackuq.dto.UpdatePartyDTO
 import io.github.ackuq.resources.Parties
+import io.github.ackuq.scrapers.ContentUpdater
 import io.github.ackuq.scrapers.getScraper
 import io.github.ackuq.services.PartyService
 import io.github.ackuq.utils.handleApiSuccess
@@ -38,7 +39,8 @@ fun Route.partyRoutes() {
                 ?: throw NotFoundException("Party could not be found")
             val scraper = getScraper(party.abbreviation)
             val content = scraper.getPages()
-            handleApiSuccess(content, HttpStatusCode.OK, call)
+            val updatedEntries = ContentUpdater.updateContent(content, party)
+            handleApiSuccess(updatedEntries, HttpStatusCode.OK, call)
         }
         patch<Parties.Abbreviation> {
             val party = PartyService.getPartyByAbbreviation(it.abbreviation)

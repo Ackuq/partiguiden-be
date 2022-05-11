@@ -9,7 +9,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 object SubjectService {
     fun getSubject(id: Int): Subject? = transaction {
-        Subject.find { Subjects.id eq id }.firstOrNull()
+        Subject.findById(id)
     }
 
     fun getSubjectByName(name: String): Subject? = transaction {
@@ -18,10 +18,6 @@ object SubjectService {
 
     fun getAllSubjects(): List<Subject> = transaction {
         Subject.all().toList()
-    }
-
-    fun getSubjects(ids: List<Int>): List<Subject> = transaction {
-        Subject.find { Subjects.id inList ids }.toList()
     }
 
     fun createSubject(newSubjectDTO: NewSubjectDTO): Subject = transaction {
