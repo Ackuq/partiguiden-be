@@ -2,9 +2,9 @@ package io.github.ackuq
 
 import io.github.ackuq.configuration.DataSourceConfig
 import io.github.ackuq.configuration.DatabaseFactory
-import io.github.ackuq.dao.Parties
-import io.github.ackuq.dao.Standpoints
-import io.github.ackuq.dao.Subjects
+import io.github.ackuq.models.dao.Parties
+import io.github.ackuq.models.dao.Standpoints
+import io.github.ackuq.models.dao.Subjects
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.transactions.transaction

@@ -1,9 +1,9 @@
-package io.github.ackuq.services
+package io.github.ackuq.models.services
 
-import io.github.ackuq.dao.Subject
-import io.github.ackuq.dao.Subjects
-import io.github.ackuq.dto.NewSubjectDTO
-import io.github.ackuq.dto.UpdateSubjectDTO
+import io.github.ackuq.models.dao.Subject
+import io.github.ackuq.models.dao.Subjects
+import io.github.ackuq.models.dto.NewSubjectDTO
+import io.github.ackuq.models.dto.UpdateSubjectDTO
 import io.ktor.server.plugins.BadRequestException
 import org.jetbrains.exposed.sql.transactions.transaction
 

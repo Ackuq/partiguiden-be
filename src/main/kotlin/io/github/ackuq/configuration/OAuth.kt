@@ -1,6 +1,6 @@
 package io.github.ackuq.configuration
 
-import io.github.ackuq.dto.UserInfo
+import io.github.ackuq.models.dto.UserInfo
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get

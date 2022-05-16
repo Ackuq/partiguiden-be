@@ -1,10 +1,10 @@
 package io.github.ackuq.routes
 
-import io.github.ackuq.dto.NewPartyDTO
-import io.github.ackuq.dto.PartyDTO
-import io.github.ackuq.services.PartyService
-import io.github.ackuq.utils.ApiError
-import io.github.ackuq.utils.ApiSuccess
+import io.github.ackuq.models.dto.NewPartyDTO
+import io.github.ackuq.models.dto.PartyDTO
+import io.github.ackuq.models.services.PartyService
+import io.github.ackuq.routes.utils.ApiError
+import io.github.ackuq.routes.utils.ApiSuccess
 import io.github.ackuq.utils.TestExtension
 import io.github.ackuq.utils.withTestServer
 import io.ktor.client.call.body

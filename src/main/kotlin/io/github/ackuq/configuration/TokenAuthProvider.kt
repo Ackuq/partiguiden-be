@@ -1,6 +1,6 @@
 package io.github.ackuq.configuration
 
-import io.github.ackuq.utils.handleApiError
+import io.github.ackuq.routes.utils.handleApiError
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.auth.HttpAuthHeader
 import io.ktor.server.application.ApplicationCall

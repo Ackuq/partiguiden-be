@@ -1,7 +1,7 @@
-package io.github.ackuq.dao
+package io.github.ackuq.models.dao
 
-import io.github.ackuq.dto.SubjectDTO
-import io.github.ackuq.dto.SubjectDetailedDTO
+import io.github.ackuq.models.dto.SubjectDTO
+import io.github.ackuq.models.dto.SubjectDetailedDTO
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID

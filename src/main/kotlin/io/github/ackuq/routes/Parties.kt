@@ -1,13 +1,13 @@
 package io.github.ackuq.routes
 
 import io.github.ackuq.configuration.OAuthConfiguration
-import io.github.ackuq.dto.NewPartyDTO
-import io.github.ackuq.dto.UpdatePartyDTO
-import io.github.ackuq.resources.Parties
+import io.github.ackuq.models.dto.NewPartyDTO
+import io.github.ackuq.models.dto.UpdatePartyDTO
+import io.github.ackuq.models.services.PartyService
+import io.github.ackuq.routes.resources.Parties
+import io.github.ackuq.routes.utils.handleApiSuccess
 import io.github.ackuq.scrapers.ContentUpdater
 import io.github.ackuq.scrapers.getScraper
-import io.github.ackuq.services.PartyService
-import io.github.ackuq.utils.handleApiSuccess
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
 import io.ktor.server.auth.authenticate

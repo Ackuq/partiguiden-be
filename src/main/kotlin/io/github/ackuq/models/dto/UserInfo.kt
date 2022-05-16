@@ -1,4 +1,4 @@
-package io.github.ackuq.dto
+package io.github.ackuq.models.dto
 
 import io.ktor.server.auth.Principal
 import kotlinx.serialization.Serializable

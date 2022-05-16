@@ -1,9 +1,9 @@
-package io.github.ackuq.services
+package io.github.ackuq.models.services
 
-import io.github.ackuq.dao.Standpoint
-import io.github.ackuq.dao.Standpoints
-import io.github.ackuq.dto.NewStandpointDTO
-import io.github.ackuq.dto.UpdateStandpointDTO
+import io.github.ackuq.models.dao.Standpoint
+import io.github.ackuq.models.dao.Standpoints
+import io.github.ackuq.models.dto.NewStandpointDTO
+import io.github.ackuq.models.dto.UpdateStandpointDTO
 import io.ktor.server.plugins.BadRequestException
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime

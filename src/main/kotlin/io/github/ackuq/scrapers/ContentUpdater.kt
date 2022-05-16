@@ -1,11 +1,11 @@
 package io.github.ackuq.scrapers
 
-import io.github.ackuq.dao.Party
-import io.github.ackuq.dao.Standpoint
-import io.github.ackuq.dto.NewStandpointDTO
-import io.github.ackuq.dto.StandpointDTO
-import io.github.ackuq.dto.toUpdateDTO
-import io.github.ackuq.services.StandpointService
+import io.github.ackuq.models.dao.Party
+import io.github.ackuq.models.dao.Standpoint
+import io.github.ackuq.models.dto.NewStandpointDTO
+import io.github.ackuq.models.dto.StandpointDTO
+import io.github.ackuq.models.dto.toUpdateDTO
+import io.github.ackuq.models.services.StandpointService
 
 object ContentUpdater {
     private fun updateEntry(entry: ScrapedInformation, party: Party): Standpoint {

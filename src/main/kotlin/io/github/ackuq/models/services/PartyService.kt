@@ -1,9 +1,9 @@
-package io.github.ackuq.services
+package io.github.ackuq.models.services
 
-import io.github.ackuq.dao.Parties
-import io.github.ackuq.dao.Party
-import io.github.ackuq.dto.NewPartyDTO
-import io.github.ackuq.dto.UpdatePartyDTO
+import io.github.ackuq.models.dao.Parties
+import io.github.ackuq.models.dao.Party
+import io.github.ackuq.models.dto.NewPartyDTO
+import io.github.ackuq.models.dto.UpdatePartyDTO
 import io.ktor.server.plugins.BadRequestException
 import org.jetbrains.exposed.sql.transactions.transaction
 

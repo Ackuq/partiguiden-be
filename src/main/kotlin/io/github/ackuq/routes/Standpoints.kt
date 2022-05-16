@@ -1,11 +1,11 @@
 package io.github.ackuq.routes
 
 import io.github.ackuq.configuration.OAuthConfiguration
-import io.github.ackuq.dto.NewStandpointDTO
-import io.github.ackuq.dto.UpdateStandpointDTO
-import io.github.ackuq.resources.Standpoints
-import io.github.ackuq.services.StandpointService
-import io.github.ackuq.utils.handleApiSuccess
+import io.github.ackuq.models.dto.NewStandpointDTO
+import io.github.ackuq.models.dto.UpdateStandpointDTO
+import io.github.ackuq.models.services.StandpointService
+import io.github.ackuq.routes.resources.Standpoints
+import io.github.ackuq.routes.utils.handleApiSuccess
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
 import io.ktor.server.auth.authenticate

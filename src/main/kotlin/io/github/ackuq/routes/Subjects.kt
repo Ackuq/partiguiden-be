@@ -1,11 +1,11 @@
 package io.github.ackuq.routes
 
 import io.github.ackuq.configuration.OAuthConfiguration
-import io.github.ackuq.dto.NewSubjectDTO
-import io.github.ackuq.dto.UpdateSubjectDTO
-import io.github.ackuq.resources.Subjects
-import io.github.ackuq.services.SubjectService
-import io.github.ackuq.utils.handleApiSuccess
+import io.github.ackuq.models.dto.NewSubjectDTO
+import io.github.ackuq.models.dto.UpdateSubjectDTO
+import io.github.ackuq.models.services.SubjectService
+import io.github.ackuq.routes.resources.Subjects
+import io.github.ackuq.routes.utils.handleApiSuccess
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
 import io.ktor.server.auth.authenticate

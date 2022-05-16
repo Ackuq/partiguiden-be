@@ -1,8 +1,8 @@
 package io.github.ackuq.routes
 
 import io.github.ackuq.configuration.OAuthConfiguration
-import io.github.ackuq.dto.AuthInfo
-import io.github.ackuq.utils.handleApiSuccess
+import io.github.ackuq.models.dto.AuthInfo
+import io.github.ackuq.routes.utils.handleApiSuccess
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.call
 import io.ktor.server.auth.OAuthAccessTokenResponse

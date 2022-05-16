@@ -1,7 +1,7 @@
-package io.github.ackuq.dao
+package io.github.ackuq.models.dao
 
 import array
-import io.github.ackuq.dto.StandpointDTO
+import io.github.ackuq.models.dto.StandpointDTO
 import org.jetbrains.exposed.dao.EntityClass
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.id.EntityID
