@@ -2,14 +2,17 @@ package io.github.ackuq.routes
 
 import io.github.ackuq.models.dto.NewPartyDTO
 import io.github.ackuq.models.dto.PartyDTO
+import io.github.ackuq.models.dto.UpdatePartyDTO
 import io.github.ackuq.models.services.PartyService
 import io.github.ackuq.routes.utils.ApiError
 import io.github.ackuq.routes.utils.ApiSuccess
 import io.github.ackuq.utils.TestExtension
 import io.github.ackuq.utils.withTestServer
 import io.ktor.client.call.body
+import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
+import io.ktor.client.request.patch
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
@@ -75,5 +78,32 @@ class PartyTest : TestExtension() {
 
         assertEquals(HttpStatusCode.NotFound, response.status)
         assertEquals(HttpStatusCode.NotFound.value, data.status)
+    }
+
+    @Test
+    fun updateParty() = withTestServer { client ->
+        PartyService.createParty(testParty)
+        val updatePartyDTO = UpdatePartyDTO("New", "N")
+        val response = client.patch("/api/v1/parties/${testParty.abbreviation}") {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, "Bearer test")
+            setBody(updatePartyDTO)
+        }
+        val data = response.body<ApiSuccess<PartyDTO>>()
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertEquals(updatePartyDTO.name, data.result.name)
+        assertEquals(updatePartyDTO.abbreviation, data.result.abbreviation)
+    }
+
+    @Test
+    fun deleteParty() = withTestServer { client ->
+        PartyService.createParty(testParty)
+        val response = client.delete("/api/v1/parties/${testParty.abbreviation}") {
+            contentType(ContentType.Application.Json)
+            header(HttpHeaders.Authorization, "Bearer test")
+        }
+        val data = response.body<ApiSuccess<String>>()
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertEquals(HttpStatusCode.OK.value, data.status)
     }
 }

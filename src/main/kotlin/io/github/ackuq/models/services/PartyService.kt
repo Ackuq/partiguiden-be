@@ -20,10 +20,6 @@ object PartyService {
         Party.all().toList()
     }
 
-    fun getParties(abbreviations: List<String>): List<Party> = transaction {
-        Party.find { Parties.abbreviation inList abbreviations }.toList()
-    }
-
     fun createParty(newPartyDTO: NewPartyDTO): Party = transaction {
         if (getPartyByAbbreviation(newPartyDTO.abbreviation) != null) {
             throw BadRequestException("Party with this abbreviation already exists")
@@ -42,5 +38,9 @@ object PartyService {
         newData.name?.let { party.name = it }
         newData.abbreviation?.let { party.abbreviation = it }
         party
+    }
+
+    fun deleteParty(party: Party): Unit = transaction {
+        party.delete()
     }
 }

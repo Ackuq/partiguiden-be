@@ -13,6 +13,7 @@ import io.ktor.server.application.call
 import io.ktor.server.auth.authenticate
 import io.ktor.server.plugins.NotFoundException
 import io.ktor.server.request.receive
+import io.ktor.server.resources.delete
 import io.ktor.server.resources.get
 import io.ktor.server.resources.patch
 import io.ktor.server.resources.post
@@ -49,6 +50,12 @@ fun Route.partyRoutes() {
             val updatePartyDTO = call.receive<UpdatePartyDTO>()
             val updatedParty = PartyService.updateParty(party, updatePartyDTO)
             handleApiSuccess(updatedParty.toDTO(), HttpStatusCode.OK, call)
+        }
+        delete<Parties.Abbreviation> {
+            val party = PartyService.getPartyByAbbreviation(it.abbreviation)
+                ?: throw NotFoundException("Party could not be found")
+            PartyService.deleteParty(party)
+            handleApiSuccess("Successfully deleted party", HttpStatusCode.OK, call)
         }
     }
 }
