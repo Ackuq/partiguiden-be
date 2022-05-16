@@ -38,7 +38,7 @@ fun Application.configureOAuth(httpClient: HttpClient) {
     install(Authentication) {
         oauth(OAuthConfiguration.oAuthName) {
             urlProvider = {
-                this@configureOAuth.environment.config.propertyOrNull("oauth.googleClientSecret")?.getString() ?: ""
+                this@configureOAuth.environment.config.propertyOrNull("oauth.callbackURL")?.getString() ?: ""
             }
             providerLookup = {
                 val state = this.request.queryParameters[OAuthConfiguration.stateQueryParameter]

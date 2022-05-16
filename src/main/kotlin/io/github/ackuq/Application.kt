@@ -20,6 +20,8 @@ import io.ktor.server.resources.Resources
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 
+fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
+
 fun Application.module(
     httpClient: HttpClient = applicationHttpClient,
 ) {

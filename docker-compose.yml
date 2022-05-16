@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   postgres:
-    image: postgres:14
+    image: postgres:14.2
     ports:
       - "5432:5432"
     environment:
@@ -10,4 +10,4 @@ services:
       - POSTGRES_PASSWORD=secret_pass
       - POSTGRES_DB=partiguiden
     volumes:
-      - .tmp/postgresql:/var/lib/postgresql
+      - .tmp/db_dev:/var/lib/postgresql/data
