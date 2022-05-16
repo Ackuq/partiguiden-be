@@ -1,5 +1,7 @@
 package io.github.ackuq.configuration
 
+import io.github.ackuq.utils.handleApiError
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.auth.HttpAuthHeader
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.auth.AuthenticationConfig
@@ -13,7 +15,6 @@ import io.ktor.server.request.ApplicationRequest
 
 class TokenAuthProvider private constructor(config: Config) : AuthenticationProvider(config) {
     internal val validatorFunction = config.validator
-    private val challengeFunction: TokenAuthChallengeFunction = config.challengeFunction
 
     override suspend fun onAuthenticate(context: AuthenticationContext) {
         val call = context.call
@@ -29,21 +30,14 @@ class TokenAuthProvider private constructor(config: Config) : AuthenticationProv
             }
             @Suppress("NAME_SHADOWING")
             context.challenge(TokenAuthChallengeKey, cause) { challenge, call ->
-                challengeFunction(TokenChallengeContext(call), token)
-                if (!challenge.completed && call.response.status() != null) {
-                    challenge.complete()
-                }
+                handleApiError("Not authenticated", HttpStatusCode.Unauthorized, call)
+                challenge.complete()
             }
         }
     }
 
     class Config(name: String?) : AuthenticationProvider.Config(name) {
-        internal var challengeFunction: TokenAuthChallengeFunction = { }
         internal var validator: AuthenticationFunction<String> = UninitializedValidator
-
-        fun challenge(block: TokenAuthChallengeFunction) {
-            challengeFunction = block
-        }
 
         fun validate(block: AuthenticationFunction<String>) {
             check(validator === UninitializedValidator) { "Only one validator could be registered" }
@@ -52,7 +46,7 @@ class TokenAuthProvider private constructor(config: Config) : AuthenticationProv
 
         private fun verifyConfiguration() {
             check(validator !== UninitializedValidator) {
-                "It should be a validator supplied to a session auth provider"
+                "It should be a validator supplied to a token auth provider"
             }
         }
 
@@ -65,7 +59,7 @@ class TokenAuthProvider private constructor(config: Config) : AuthenticationProv
 
     companion object {
         private val UninitializedValidator: suspend ApplicationCall.(Any) -> Principal? = {
-            error("It should be a validator supplied to a session auth provider")
+            error("It should be a validator supplied to a token auth provider")
         }
     }
 }
@@ -81,12 +75,10 @@ inline fun AuthenticationConfig.token(
 /**
  * A context for [TokenAuthChallengeFunction].
  */
-class TokenChallengeContext(
-    val call: ApplicationCall
-)
+class TokenChallengeContext
 
 /**
- * Specifies what to send back if session authentication fails.
+ * Specifies what to send back if token authentication fails.
  */
 typealias TokenAuthChallengeFunction = suspend TokenChallengeContext.(String?) -> Unit
 
@@ -109,4 +101,4 @@ fun ApplicationRequest.tokenAuthentication(): String? {
 /**
  * A key used to register authentication challenge.
  */
-const val TokenAuthChallengeKey: String = "TokenAuth"
+const val TokenAuthChallengeKey: String = "BearerTokenAuth"

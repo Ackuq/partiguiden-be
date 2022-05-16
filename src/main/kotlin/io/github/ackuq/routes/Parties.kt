@@ -19,6 +19,7 @@ import io.ktor.server.resources.post
 import io.ktor.server.routing.Route
 
 fun Route.partyRoutes() {
+
     get<Parties> {
         val parties = PartyService.getAllParties().map { it.toDTO() }
         handleApiSuccess(parties, HttpStatusCode.OK, call)

@@ -1,13 +1,12 @@
 package io.github.ackuq.configuration
 
 import io.github.ackuq.dto.UserInfo
-import io.github.ackuq.utils.handleApiError
+import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
-import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.auth.Authentication
@@ -19,7 +18,7 @@ import io.ktor.server.auth.oauth
  */
 object OAuthConfiguration {
     const val oAuthName = "oauth"
-    const val authName = "auth-session"
+    const val authName = "auth-token"
     const val stateQueryParameter = "state"
 
     // URL for OAuth authentication
@@ -35,11 +34,11 @@ object OAuthConfiguration {
     val scopes = listOf("https://www.googleapis.com/auth/userinfo.email")
 }
 
-fun Application.configureOAuth() {
+fun Application.configureOAuth(httpClient: HttpClient) {
     install(Authentication) {
         oauth(OAuthConfiguration.oAuthName) {
             urlProvider = {
-                this@configureOAuth.environment.config.property("oauth.googleClientSecret").getString()
+                this@configureOAuth.environment.config.propertyOrNull("oauth.googleClientSecret")?.getString() ?: ""
             }
             providerLookup = {
                 val state = this.request.queryParameters[OAuthConfiguration.stateQueryParameter]
@@ -62,23 +61,27 @@ fun Application.configureOAuth() {
                     }
                 )
             }
-            client = applicationHttpClient
+            client = httpClient
         }
         token(OAuthConfiguration.authName) {
             validate { token ->
-                try {
-                    val httpResponse = applicationHttpClient.get(OAuthConfiguration.validationURL) {
-                        headers {
-                            append(HttpHeaders.Authorization, "Bearer $token")
+                // TODO: Should not mock this here
+                val isTest = this@configureOAuth.environment.config.propertyOrNull("ktor.environment")?.getString()
+                    .equals("test")
+                if (isTest) {
+                    UserInfo("1", "test", true, "", "")
+                } else {
+                    try {
+                        val httpResponse = httpClient.get(OAuthConfiguration.validationURL) {
+                            headers {
+                                append(HttpHeaders.Authorization, "Bearer $token")
+                            }
                         }
+                        httpResponse.body<UserInfo>()
+                    } catch (e: Exception) {
+                        null
                     }
-                    httpResponse.body<UserInfo>()
-                } catch (e: Exception) {
-                    null
                 }
-            }
-            challenge {
-                handleApiError("Not authenticated", HttpStatusCode.Unauthorized, call)
             }
         }
     }

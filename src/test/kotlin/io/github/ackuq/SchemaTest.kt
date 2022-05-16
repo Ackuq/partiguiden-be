@@ -1,29 +1,31 @@
 package io.github.ackuq
 
+import io.github.ackuq.configuration.DataSourceConfig
+import io.github.ackuq.configuration.DatabaseFactory
 import io.github.ackuq.dao.Parties
 import io.github.ackuq.dao.Standpoints
 import io.github.ackuq.dao.Subjects
-import io.github.ackuq.utils.TestDatabaseFactory
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.transactions.transaction
-import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+val TestDatabaseConfig = DataSourceConfig(
+    jdbcUrl = "jdbc:h2:mem:test;DATABASE_TO_UPPER=false;MODE=PostgreSQL",
+    driverClassName = "org.h2.Driver",
+    dbUser = "sa",
+    dbPassword = "",
+    maximumPoolSize = 3,
+    autoCommit = false,
+)
+
 class SchemaTest {
 
-    private val databaseFactory: TestDatabaseFactory = TestDatabaseFactory()
-
     @BeforeTest
-    fun setup() {
-        databaseFactory.init()
-    }
-
-    @AfterTest
-    fun tearDown() {
-        databaseFactory.close()
+    fun initDB() {
+        DatabaseFactory.init(TestDatabaseConfig)
     }
 
     @Test
