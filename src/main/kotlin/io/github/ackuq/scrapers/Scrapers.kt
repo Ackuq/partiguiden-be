@@ -1,3 +1,5 @@
+@file:OptIn(DelicateCoroutinesApi::class)
+
 package io.github.ackuq.scrapers
 
 import io.ktor.server.plugins.BadRequestException
@@ -10,7 +12,6 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import org.jsoup.Jsoup
 
-@OptIn(DelicateCoroutinesApi::class)
 val scraperContext = newFixedThreadPoolContext(4, "scraper")
 
 @Serializable
