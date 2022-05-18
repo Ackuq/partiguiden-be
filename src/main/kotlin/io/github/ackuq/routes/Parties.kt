@@ -44,6 +44,13 @@ fun Route.partyRoutes() {
             val updatedEntries = ContentUpdater.updateContent(content, party)
             handleApiSuccess(updatedEntries, HttpStatusCode.OK, call)
         }
+        post<Parties.Abbreviation.Scrape.Dry> {
+            val party = PartyService.getPartyByAbbreviation(it.parent.parent.abbreviation)
+                ?: throw NotFoundException("Party could not be found")
+            val scraper = getScraper(party.abbreviation)
+            val content = scraper.getPages(it.max)
+            handleApiSuccess(content, HttpStatusCode.OK, call)
+        }
         patch<Parties.Abbreviation> {
             val party = PartyService.getPartyByAbbreviation(it.abbreviation)
                 ?: throw NotFoundException("Party could not be found")

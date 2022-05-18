@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS standpoints (
     link VARCHAR(150) NOT NULL CONSTRAINT standpoints_link_unique UNIQUE,
     title VARCHAR(100) NOT NULL,
     content TEXT ARRAY NOT NULL,
+    paragraph TEXT NULL,
     update_date TIMESTAMP WITH TIME ZONE NOT NULL,
     party INT NOT NULL,
     subject INT NULL,

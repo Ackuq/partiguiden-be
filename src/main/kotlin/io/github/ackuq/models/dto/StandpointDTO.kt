@@ -8,17 +8,9 @@ data class StandpointDTO(
     val link: String,
     val title: String,
     val content: List<String>,
+    val paragraph: String?,
     val updateDate: String,
     val party: String,
-    val subject: Int?
-)
-
-@Serializable
-data class UpdateStandpointDTO(
-    val link: String?,
-    val title: String?,
-    val content: List<String>?,
-    val party: String?,
     val subject: Int?
 )
 
@@ -27,8 +19,7 @@ data class NewStandpointDTO(
     val link: String,
     val title: String,
     val content: List<String>,
+    val paragraph: String?,
     val party: String,
     val subject: Int?,
 )
-
-fun NewStandpointDTO.toUpdateDTO() = UpdateStandpointDTO(link, title, content, party, subject)

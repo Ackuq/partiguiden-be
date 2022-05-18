@@ -2,7 +2,6 @@ package io.github.ackuq.routes
 
 import io.github.ackuq.configuration.OAuthConfiguration
 import io.github.ackuq.models.dto.NewStandpointDTO
-import io.github.ackuq.models.dto.UpdateStandpointDTO
 import io.github.ackuq.models.services.StandpointService
 import io.github.ackuq.routes.resources.Standpoints
 import io.github.ackuq.routes.utils.handleApiSuccess
@@ -12,8 +11,8 @@ import io.ktor.server.auth.authenticate
 import io.ktor.server.plugins.NotFoundException
 import io.ktor.server.request.receive
 import io.ktor.server.resources.get
-import io.ktor.server.resources.patch
 import io.ktor.server.resources.post
+import io.ktor.server.resources.put
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
 
@@ -34,10 +33,10 @@ fun Route.standpointsRoutes() {
             val standpoint = StandpointService.createStandpoint(standpointDTO)
             handleApiSuccess(standpoint.toDTO(), HttpStatusCode.Created, call)
         }
-        patch<Standpoints.Id> {
+        put<Standpoints.Id> {
             val standpoint =
                 StandpointService.getStandpoint(it.id) ?: throw NotFoundException("Standpoint couldn't be found")
-            val updateDTO = call.receive<UpdateStandpointDTO>()
+            val updateDTO = call.receive<NewStandpointDTO>()
             val newStandpoint = StandpointService.updateStandpoint(standpoint, updateDTO)
             handleApiSuccess(newStandpoint.toDTO(), HttpStatusCode.OK, call)
         }

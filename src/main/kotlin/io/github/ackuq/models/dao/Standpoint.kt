@@ -19,6 +19,7 @@ object Standpoints : IntIdTable(name = "standpoints", columnName = "id") {
     val title: Column<String> = varchar("title", 100)
 
     val content = array<String>("content", TextColumnType())
+    val paragraph: Column<String?> = text("paragraph").nullable()
     val updateDate: Column<LocalDateTime> = datetime("update_date")
     val party = reference(
         "party",
@@ -40,6 +41,7 @@ class Standpoint(id: EntityID<Int>) : IntEntity(id) {
     var link by Standpoints.link
     var title by Standpoints.title
     var content by Standpoints.content
+    var paragraph by Standpoints.paragraph
     var updateDate by Standpoints.updateDate
     var party by Party referencedOn Standpoints.party
     var subject by Subject optionalReferencedOn Standpoints.subject
@@ -50,6 +52,7 @@ class Standpoint(id: EntityID<Int>) : IntEntity(id) {
             link = this@Standpoint.link,
             title = this@Standpoint.title,
             content = this@Standpoint.content.toList(),
+            paragraph = this@Standpoint.paragraph,
             updateDate = this@Standpoint.updateDate.toString(),
             party = this@Standpoint.party.abbreviation,
             subject = this@Standpoint.subject?.id?.value,

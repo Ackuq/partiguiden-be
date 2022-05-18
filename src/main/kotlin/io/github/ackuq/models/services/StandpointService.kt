@@ -3,7 +3,6 @@ package io.github.ackuq.models.services
 import io.github.ackuq.models.dao.Standpoint
 import io.github.ackuq.models.dao.Standpoints
 import io.github.ackuq.models.dto.NewStandpointDTO
-import io.github.ackuq.models.dto.UpdateStandpointDTO
 import io.ktor.server.plugins.BadRequestException
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
@@ -40,24 +39,20 @@ object StandpointService {
         }
     }
 
-    fun updateStandpoint(standpoint: Standpoint, updateStandpointDTO: UpdateStandpointDTO): Standpoint = transaction {
-        updateStandpointDTO.title?.let { standpoint.title = it }
-        updateStandpointDTO.content?.let { standpoint.content = it.toTypedArray() }
-        updateStandpointDTO.link?.let {
-            standpoint.link = it
-        }
+    /**
+     * TODO: How to go about updating date?
+     */
+    fun updateStandpoint(standpoint: Standpoint, newValues: NewStandpointDTO): Standpoint = transaction {
+        standpoint.title = newValues.title
+        standpoint.content = newValues.content.toTypedArray()
+        standpoint.paragraph = newValues.paragraph
+        standpoint.link = newValues.link
         // Reference updates
-        updateStandpointDTO.party?.let {
-            val party = PartyService.getPartyByAbbreviation(it)
-                ?: throw BadRequestException("Invalid party abbreviation $it")
-            standpoint.party = party
+        standpoint.party = newValues.party.let {
+            PartyService.getPartyByAbbreviation(it) ?: throw BadRequestException("Invalid party abbreviation $it")
         }
-        updateStandpointDTO.subject?.let {
-            val subject = SubjectService.getSubject(it)
-            standpoint.subject = subject
-        }
-        if (updateStandpointDTO.content != null || updateStandpointDTO.title != null) {
-            standpoint.updateDate = LocalDateTime.now()
+        standpoint.subject = newValues.subject?.let {
+            SubjectService.getSubject(it)
         }
         standpoint
     }
