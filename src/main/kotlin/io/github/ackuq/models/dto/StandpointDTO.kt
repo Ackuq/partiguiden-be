@@ -1,13 +1,14 @@
-package io.github.ackuq.dto
+package io.github.ackuq.models.dto
 
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class StandpointDTO(
-    val id: String,
+    val id: Int,
     val link: String,
     val title: String,
     val content: List<String>,
+    val paragraph: String?,
     val updateDate: String,
     val party: String,
     val subject: Int?
@@ -18,15 +19,19 @@ data class NewStandpointDTO(
     val link: String,
     val title: String,
     val content: List<String>,
+    val paragraph: String?,
     val party: String,
-    val subject: Int?
+    val subject: Int?,
 )
 
 @Serializable
-data class UpdateStandpointDTO(
-    val link: String?,
-    val title: String?,
-    val content: List<String>?,
-    val party: String?,
-    val subject: Int?
+data class StandpointUpdateEventDTO(
+    val id: Int,
+    val newLink: String,
+    val newTitle: String,
+    val newContent: List<String>,
+    val newParagraph: String?,
+    val updateDate: String,
+    val party: String,
+    val standpoint: Int?,
 )

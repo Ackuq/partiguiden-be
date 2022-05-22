@@ -1,4 +1,4 @@
-package io.github.ackuq.utils
+package io.github.ackuq.routes.utils
 
 import kotlinx.serialization.Serializable
 

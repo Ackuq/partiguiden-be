@@ -1,9 +1,9 @@
-package io.github.ackuq.services
+package io.github.ackuq.models.services
 
-import io.github.ackuq.dao.Parties
-import io.github.ackuq.dao.Party
-import io.github.ackuq.dto.NewPartyDTO
-import io.github.ackuq.dto.UpdatePartyDTO
+import io.github.ackuq.models.dao.Parties
+import io.github.ackuq.models.dao.Party
+import io.github.ackuq.models.dto.NewPartyDTO
+import io.github.ackuq.models.dto.UpdatePartyDTO
 import io.ktor.server.plugins.BadRequestException
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -18,10 +18,6 @@ object PartyService {
 
     fun getAllParties(): List<Party> = transaction {
         Party.all().toList()
-    }
-
-    fun getParties(abbreviations: List<String>): List<Party> = transaction {
-        Party.find { Parties.abbreviation inList abbreviations }.toList()
     }
 
     fun createParty(newPartyDTO: NewPartyDTO): Party = transaction {
@@ -42,5 +38,9 @@ object PartyService {
         newData.name?.let { party.name = it }
         newData.abbreviation?.let { party.abbreviation = it }
         party
+    }
+
+    fun deleteParty(party: Party): Unit = transaction {
+        party.delete()
     }
 }

@@ -1,4 +1,4 @@
-package io.github.ackuq.dto
+package io.github.ackuq.models.dto
 
 import kotlinx.serialization.Serializable
 
@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class SubjectDTO(
     val id: Int,
     val name: String,
-    val standpoints: List<String>
+    val standpoints: List<Int>
 )
 
 @Serializable

@@ -1,11 +1,11 @@
-package io.github.ackuq.dao
+package io.github.ackuq.models.dao
 
 import array
-import io.github.ackuq.dto.StandpointDTO
-import org.jetbrains.exposed.dao.Entity
+import io.github.ackuq.models.dto.StandpointDTO
 import org.jetbrains.exposed.dao.EntityClass
+import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IdTable
+import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.TextColumnType
@@ -13,36 +13,34 @@ import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 
-object Standpoints : IdTable<String>(name = "standpoints") {
-    // Hashed version of the url to identify the objects
-    override val id: Column<EntityID<String>> = varchar("id", 64).entityId()
+object Standpoints : IntIdTable(name = "standpoints", columnName = "id") {
     val link: Column<String> = varchar("link", 150).uniqueIndex()
     val title: Column<String> = varchar("title", 100)
 
     val content = array<String>("content", TextColumnType())
+    val paragraph: Column<String?> = text("paragraph").nullable()
     val updateDate: Column<LocalDateTime> = datetime("update_date")
     val party = reference(
         "party",
         Parties,
         onDelete = ReferenceOption.CASCADE,
         fkName = "fk_standpoints_party"
-    )
+    ).index()
     val subject = reference(
         "subject",
         Subjects,
         onDelete = ReferenceOption.SET_NULL,
         fkName = "fk_standpoints_subject"
-    ).nullable()
-
-    override val primaryKey = PrimaryKey(id)
+    ).nullable().index()
 }
 
-class Standpoint(id: EntityID<String>) : Entity<String>(id) {
-    companion object : EntityClass<String, Standpoint>(Standpoints)
+class Standpoint(id: EntityID<Int>) : IntEntity(id) {
+    companion object : EntityClass<Int, Standpoint>(Standpoints)
 
     var link by Standpoints.link
     var title by Standpoints.title
     var content by Standpoints.content
+    var paragraph by Standpoints.paragraph
     var updateDate by Standpoints.updateDate
     var party by Party referencedOn Standpoints.party
     var subject by Subject optionalReferencedOn Standpoints.subject
@@ -53,6 +51,7 @@ class Standpoint(id: EntityID<String>) : Entity<String>(id) {
             link = this@Standpoint.link,
             title = this@Standpoint.title,
             content = this@Standpoint.content.toList(),
+            paragraph = this@Standpoint.paragraph,
             updateDate = this@Standpoint.updateDate.toString(),
             party = this@Standpoint.party.abbreviation,
             subject = this@Standpoint.subject?.id?.value,

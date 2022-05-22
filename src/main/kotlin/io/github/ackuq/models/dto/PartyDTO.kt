@@ -1,4 +1,4 @@
-package io.github.ackuq.dto
+package io.github.ackuq.models.dto
 
 import kotlinx.serialization.Serializable
 

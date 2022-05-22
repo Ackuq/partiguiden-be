@@ -1,4 +1,4 @@
-package io.github.ackuq.resources
+package io.github.ackuq.routes.resources
 
 import io.ktor.resources.Resource
 import kotlinx.serialization.Serializable

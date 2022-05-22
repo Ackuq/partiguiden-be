@@ -1,7 +1,7 @@
 package io.github.ackuq.configuration
 
-import io.github.ackuq.utils.handleApiError
-import io.github.ackuq.utils.handleApiException
+import io.github.ackuq.routes.utils.handleApiError
+import io.github.ackuq.routes.utils.handleApiException
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.install

@@ -1,4 +1,4 @@
-package io.github.ackuq.resources
+package io.github.ackuq.routes.resources
 
 import io.ktor.resources.Resource
 import kotlinx.serialization.Serializable
@@ -11,6 +11,10 @@ class Parties {
     class Abbreviation(@Suppress("unused") val parent: Parties = Parties(), val abbreviation: String) {
         @Serializable
         @Resource("scrape")
-        class Scrape(@Suppress("unused") val parent: Abbreviation)
+        class Scrape(val parent: Abbreviation) {
+            @Serializable
+            @Resource("dry")
+            class Dry(val parent: Scrape, val max: Int? = 10)
+        }
     }
 }

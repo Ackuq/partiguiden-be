@@ -1,7 +1,7 @@
 val ktorVersion = "2.0.1"
 val kotlinVersion = "1.6.21"
 val logbackVersion = "1.2.11"
-val postgresqlVersion = "42.3.5"
+val postgresqlVersion = "42.3.4"
 val exposedVersion = "0.38.2"
 val flywayVersion = "8.5.11"
 val jbcryptVersion = "0.4"
@@ -9,6 +9,7 @@ val hikariCPVersion = "5.0.1"
 val h2Version = "2.1.212"
 val caffeineVersion = "3.1.0"
 val jsoupVersion = "1.15.1"
+
 plugins {
     application
     kotlin("jvm") version "1.6.21"
@@ -16,6 +17,7 @@ plugins {
     id("org.flywaydb.flyway") version "8.5.11"
     id("com.jetbrains.exposed.gradle.plugin") version "0.2.1"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 group = "ackuq.github.io"
@@ -23,9 +25,6 @@ version = "0.0.1"
 
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
-
-    val isDevelopment: Boolean = project.ext.has("development")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
 repositories {
@@ -37,7 +36,6 @@ dependencies {
     // Core packets
     implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-server-core:$ktorVersion")
-    implementation("io.ktor:ktor-server-host-common:$ktorVersion")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
     implementation("io.ktor:ktor-server-default-headers:$ktorVersion")
     implementation("io.ktor:ktor-server-auto-head-response:$ktorVersion")
@@ -73,8 +71,8 @@ dependencies {
     // Flyway for DB migrations
     implementation("org.flywaydb:flyway-core:$flywayVersion")
     // Tests
-    testImplementation("io.ktor:ktor-server-tests:$ktorVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+    testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
     testImplementation("com.h2database:h2:$h2Version")
 }
 
@@ -86,7 +84,7 @@ kotlin {
 
 tasks {
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-        kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+        kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
     }
 
     create("stage") {

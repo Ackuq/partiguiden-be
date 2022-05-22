@@ -1,4 +1,4 @@
-package io.github.ackuq.utils
+package io.github.ackuq.routes.utils
 
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
