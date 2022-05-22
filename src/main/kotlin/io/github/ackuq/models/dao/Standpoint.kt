@@ -14,7 +14,6 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 
 object Standpoints : IntIdTable(name = "standpoints", columnName = "id") {
-    // Hashed version of the url to identify the objects
     val link: Column<String> = varchar("link", 150).uniqueIndex()
     val title: Column<String> = varchar("title", 100)
 
@@ -26,13 +25,13 @@ object Standpoints : IntIdTable(name = "standpoints", columnName = "id") {
         Parties,
         onDelete = ReferenceOption.CASCADE,
         fkName = "fk_standpoints_party"
-    )
+    ).index()
     val subject = reference(
         "subject",
         Subjects,
         onDelete = ReferenceOption.SET_NULL,
         fkName = "fk_standpoints_subject"
-    ).nullable()
+    ).nullable().index()
 }
 
 class Standpoint(id: EntityID<Int>) : IntEntity(id) {

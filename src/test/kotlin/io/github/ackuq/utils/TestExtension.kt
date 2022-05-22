@@ -1,6 +1,8 @@
 package io.github.ackuq.utils
 
 import io.github.ackuq.models.dao.Parties
+import io.github.ackuq.models.dao.StandpointDeleteEvents
+import io.github.ackuq.models.dao.StandpointUpdateEvents
 import io.github.ackuq.models.dao.Standpoints
 import io.github.ackuq.models.dao.Subjects
 import org.jetbrains.exposed.sql.deleteAll
@@ -14,6 +16,8 @@ open class TestExtension {
             Parties.deleteAll()
             Standpoints.deleteAll()
             Subjects.deleteAll()
+            StandpointDeleteEvents.deleteAll()
+            StandpointUpdateEvents.deleteAll()
         }
     }
 }

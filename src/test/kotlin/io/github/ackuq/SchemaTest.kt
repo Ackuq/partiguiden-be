@@ -3,6 +3,8 @@ package io.github.ackuq
 import io.github.ackuq.configuration.DataSourceConfig
 import io.github.ackuq.configuration.DatabaseFactory
 import io.github.ackuq.models.dao.Parties
+import io.github.ackuq.models.dao.StandpointDeleteEvents
+import io.github.ackuq.models.dao.StandpointUpdateEvents
 import io.github.ackuq.models.dao.Standpoints
 import io.github.ackuq.models.dao.Subjects
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -33,9 +35,10 @@ class SchemaTest {
         val tables = arrayOf<Table>(
             Parties,
             Standpoints,
+            StandpointDeleteEvents,
+            StandpointUpdateEvents,
             Subjects
         )
-
         transaction {
             assertEquals(emptyList(), SchemaUtils.statementsRequiredToActualizeScheme(*tables))
             assertEquals(emptyList(), SchemaUtils.addMissingColumnsStatements(*tables))

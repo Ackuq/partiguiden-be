@@ -23,3 +23,15 @@ data class NewStandpointDTO(
     val party: String,
     val subject: Int?,
 )
+
+@Serializable
+data class StandpointUpdateEventDTO(
+    val id: Int,
+    val newLink: String,
+    val newTitle: String,
+    val newContent: List<String>,
+    val newParagraph: String?,
+    val updateDate: String,
+    val party: String,
+    val standpoint: Int?,
+)
