@@ -6,7 +6,7 @@ val exposedVersion = "0.38.2"
 val flywayVersion = "8.5.12"
 val jbcryptVersion = "0.4"
 val hikariCPVersion = "5.0.1"
-val h2Version = "2.1.212"
+val h2Version = "2.1.214"
 val caffeineVersion = "3.1.1"
 val jsoupVersion = "1.15.1"
 plugins {
