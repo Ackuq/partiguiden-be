@@ -8,7 +8,7 @@ val jbcryptVersion = "0.4"
 val hikariCPVersion = "5.0.1"
 val h2Version = "2.1.214"
 val caffeineVersion = "3.1.1"
-val jsoupVersion = "1.15.1"
+val jsoupVersion = "1.15.2"
 plugins {
     application
     kotlin("jvm") version "1.7.0"
