@@ -11,7 +11,7 @@ val caffeineVersion = "3.1.1"
 val jsoupVersion = "1.15.2"
 plugins {
     application
-    kotlin("jvm") version "1.7.0"
+    kotlin("jvm") version "1.7.10"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.7.10"
     id("org.flywaydb.flyway") version "8.5.13"
     id("com.jetbrains.exposed.gradle.plugin") version "0.2.1"
