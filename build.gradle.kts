@@ -13,7 +13,7 @@ plugins {
     application
     kotlin("jvm") version "1.7.10"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.7.10"
-    id("org.flywaydb.flyway") version "9.1.0"
+    id("org.flywaydb.flyway") version "9.1.2"
     id("com.jetbrains.exposed.gradle.plugin") version "0.2.1"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
 }
